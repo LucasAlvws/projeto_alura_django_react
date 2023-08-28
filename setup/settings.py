@@ -25,7 +25,7 @@ SECRET_KEY = 'we2q@@2p30+=^#(xbgl7e@3+r2dt+zmf#us2m$ix=q&n+=y-z$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -52,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "django.middleware.common.CommonMiddleware",
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'setup.urls'
@@ -140,7 +141,16 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
        'anon': '100/day',
        'user': '1000/day'
-    }
+    },
+    #'DEFAULT_PARSER_CLASSES': [
+    #    'rest_framework_yaml.parsers.JSONParser',
+    #    'rest_framework_xml.parsers.XMLParser',
+    #],
+    #'DEFAULT_RENDERER_CLASSES': [
+    #    'rest_framework.renderers.JSONRenderer',
+    #    'rest_framework_xml.renderers.XMLRenderer',
+    #],
+
 }
 
 CORS_ALLOWED_ORIGINS = [
@@ -150,3 +160,18 @@ CORS_ALLOWED_ORIGINS = [
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
 MEDIA_URL = '/media/'
+
+
+
+'''CACHES = {
+    "default" : {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+ }'''
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
